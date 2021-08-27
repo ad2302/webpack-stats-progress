@@ -7,8 +7,8 @@ import {
 import { ISizeMap } from "./types";
 import { printBuildError } from "./error";
 import { progressBarPlugin } from "./progress";
-
-const chalk = require("chalk");
+import readline from 'readline';
+import chalk from 'chalk';
 
 interface IOptions {
   buildFolder: string;
@@ -42,8 +42,8 @@ class BetterWebpackStats {
     progressBarPlugin().apply(compiler);
 
     compiler.hooks.done.tap("done", (stats: Stats) => {
-      //@ts-ignore
-      process.stdout.clearLine();
+      readline.clearLine(process.stdout, 0)
+      readline.cursorTo(process.stdout, 0)
       var error = stats.compilation.errors[0];
       if (error) {
         printBuildError(error);
